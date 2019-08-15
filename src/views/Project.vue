@@ -1,23 +1,27 @@
 <template>
   <div class="about">
     <h1>{{ `${username}'s Project: ${project}` }}</h1>
-    <!--<div class="projects">-->
-      <!--<div v-for="project in projects">-->
-        <!--{{ project.name }}-->
-      <!--</div>-->
-    <!--</div>-->
+    <div class="content">
+      <VueMarkdown v-if="content !== undefined">{{ content }}</VueMarkdown>
+    </div>
   </div>
 </template>
 
 
 <script>
+import VueMarkdown from 'vue-markdown';
 import { Service } from '../services/Service';
 
 export default {
   name: 'user',
 
+  components: {
+    VueMarkdown
+  },
+
   data() {
     return {
+      content: undefined,
     };
   },
 
@@ -37,7 +41,7 @@ export default {
   methods: {
     async getProjectDescription(username, project) {
       const response = await Service.getProjectReadme(username, project);
-      console.log(atob(response.data.content));
+      this.content = atob(response.data.content);
     },
   },
 };
@@ -46,5 +50,9 @@ export default {
 <style scoped>
   .projects {
     text-align: left;
+  }
+  .content {
+    text-align: left;
+    padding: 20px;
   }
 </style>
