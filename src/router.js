@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import User from './views/User.vue';
+import Project from './views/Project.vue';
 
 Vue.use(Router);
 
@@ -14,9 +15,14 @@ export default new Router({
       component: Home,
     },
     {
-      path: '/:id',
+      path: '/:username',
       name: 'user',
       component: User,
+    },
+    {
+      path: '/:username/:project',
+      name: 'user',
+      component: Project,
     },
     // {
     //   path: '/about',
